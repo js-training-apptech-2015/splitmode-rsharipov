@@ -51,7 +51,7 @@ angular.module("logic").service("MultiPlayer", ['CommonLogic', '$timeout', funct
 	return {
 		makeMoveAt: makeMoveAt,
 		initialState: initialState,
-		player1Label: 'First player',
-		player2Label: 'Second player'
+		player1Label: 'First',
+		player2Label: 'Second'
 	}
 }]);

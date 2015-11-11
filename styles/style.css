@@ -1,59 +1,63 @@
 .modal-message {
-  text-align: center;
-  padding: 10px;
+    text-align: center;
+    padding: 10px;
 }
 
 .game-board-container {
-  text-align: center;
+    text-align: center;
 }
+
 .game-board {
-  margin: auto;
-  width: 30%;
+    margin: auto;
+    width: 30%;
 }
 
 @media (orientation: portrait) {
-  .game-board {
-    width: 60%;
-    max-width:
-  }
+    .game-board {
+        width: 60%;
+        max-width:
+    }
 }
 
 .current-player {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .cell {
-  height: 0;
-  padding-bottom: 33%;
-  width: 33%;
-  border: 1px solid black;
-  text-align: center;
-  transition: background-position 0.5s ease-in;
+    height: 0;
+    padding-bottom: 33%;
+    width: 33%;
+    border: 1px solid black;
+    text-align: center;
+    transition: background-position 0.5s ease-in;
 }
+
 .score {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 2em;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 2em;
 }
 
 @media (max-width: 480px) {
-  .o-cell { 
-    background: url("../images/O_small.png") no-repeat center;
-  }
-  .x-cell { 
-    background: url("/images/X_small.png") no-repeat center;
-  }
+    .o-cell {
+        background: url("../images/O_small.png") no-repeat center;
+    }
+
+    .x-cell {
+        background: url("../images/X_small.png") no-repeat center;
+    }
 }
 
 @media (min-width: 481px) {
-  .o-cell { 
-    background: url("../images/O.png") no-repeat center;
-  }
-  .x-cell { 
-    background: url("../images/X.png") no-repeat center;
-  }
+    .o-cell {
+        background: url("../images/O.png") no-repeat center;
+    }
+
+    .x-cell {
+        background: url("../images/X.png") no-repeat center;
+    }
 }
 
 .empty-cell {
-  background: none;
+    background: none;
 }
