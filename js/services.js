@@ -137,11 +137,9 @@ angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout
 		delayForbiddingMoves(state, function() {
 			state.board = initialState().board;			
 		}, BOARD_RESET_TIMEOUT);
-		console.log("User " + (state.userIsForbiddenToMakeAMove ? "CAN" : "cannot") + " make a move after deferred board reset");
 	}
 	
 	function makeMoveAt(state, i, j, overListener) {
-		console.log("User makes a move at (" + i + ", " + j + "), they " + (state.userIsForbiddenToMakeAMove ? "CAN" : "cannot") + " make a move");
 		if (state.userIsForbiddenToMakeAMove != 0) {
 			return;
 		}
