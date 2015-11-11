@@ -1,11 +1,11 @@
 angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout) {
-  
-  const USER_MARK = 'X';
-  const AI_MARK = '0';
-  const AI_TURN_TIMEOUT = 500;
-  const BOARD_RESET_TIMEOUT = 2000;
-  
-  function parseState(string) {
+	
+	const USER_MARK = 'X';
+	const AI_MARK = '0';
+	const AI_TURN_TIMEOUT = 500;
+	const BOARD_RESET_TIMEOUT = 2000;
+	
+	function parseState(string) {
 		if (!string.match("^[X0_]{10}$")) {
 			throw "state must be represented as 10-character string of 'X', 'O' and '_'"
 		}
@@ -99,72 +99,79 @@ angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout
 		bestMove.result = -bestMove.result;
 		return bestMove;
 	}
-  
-  function initialState() {
-    return {
-      userScore: 0,
-      cpuScore: 0,
-      board: parseState('X_________').board
-    }
-  }
-  
-  function noMoreMoves(board) {
-    return calculateNextMoves({
-      board: board,
-      mine: 'X'
-    }).length == 0;
-  }
-  
-  var USER_WON = "UserWon", AI_WON = "AiWon", TIE = "Tie";
-  
-  function handleGameOver(state, overListener) {
-    if (isWinningFor(state.board, USER_MARK)) {
-      ++state.userScore;
-      overListener(USER_WON);      
-    }
-    else if (isWinningFor(state.board, AI_MARK)) {
-      ++state.cpuScore;
-      overListener(AI_WON);
-    }
-    else if (noMoreMoves(state.board)) {
-      overListener(TIE);
-    }
-    else {
-      return;
-    }
-    $timeout(function() {
-      state.board = initialState().board;
-    }, BOARD_RESET_TIMEOUT);    
-  }
-  
-  var userCanMakeMove = true;
-  
-  function makeMoveAt(state, i, j, overListener) {
-	if (!userCanMakeMove) {
-		return;
-	}	
-    var board = state.board;
-  	if (board[i][j] != '_') {
-		return;
-	}
-	board[i][j] = USER_MARK;
-	var best = findBestMove({ mine: AI_MARK, board: board });    
 	
-	userCanMakeMove = false;
-    $timeout(function() {
-      if (typeof(best.move) != 'undefined') {
-        board[best.move[0]][best.move[1]] = AI_MARK;
-      }
-      handleGameOver(state, overListener);
-	  userCanMakeMove = true;
-    }, AI_TURN_TIMEOUT);
-  }
-  
-  return {
-    makeMoveAt: makeMoveAt,
-    initialState: initialState,
-    USER_WON: USER_WON,
-    AI_WON: AI_WON,
-    TIE: TIE
-  }
+	function initialState() {
+		return {
+			userScore: 0,
+			cpuScore: 0,
+			// counter that allows recursive locking of user's move
+			userIsForbiddenToMakeAMove: 0,
+			board: parseState('X_________').board
+		}
+	}
+	
+	function noMoreMoves(board) {
+		return calculateNextMoves({
+			board: board,
+			mine: 'X'
+		}).length == 0;
+	}
+	
+	var USER_WON = "UserWon", AI_WON = "AiWon", TIE = "Tie";
+	
+	function handleGameOver(state, overListener) {
+		if (isWinningFor(state.board, USER_MARK)) {
+			++state.userScore;
+			overListener(USER_WON);			
+		}
+		else if (isWinningFor(state.board, AI_MARK)) {
+			++state.cpuScore;
+			overListener(AI_WON);
+		}
+		else if (noMoreMoves(state.board)) {
+			overListener(TIE);
+		}
+		else {
+			return;
+		}
+		delayForbiddingMoves(state, function() {
+			state.board = initialState().board;			
+		}, BOARD_RESET_TIMEOUT);
+		console.log("User " + (state.userIsForbiddenToMakeAMove ? "CAN" : "cannot") + " make a move after deferred board reset");
+	}
+	
+	function makeMoveAt(state, i, j, overListener) {
+		console.log("User makes a move at (" + i + ", " + j + "), they " + (state.userIsForbiddenToMakeAMove ? "CAN" : "cannot") + " make a move");
+		if (state.userIsForbiddenToMakeAMove != 0) {
+			return;
+		}
+		var board = state.board;
+		if (board[i][j] != '_') {
+			return;
+		}
+		board[i][j] = USER_MARK;
+		var best = findBestMove({ mine: AI_MARK, board: board });		
+		delayForbiddingMoves(state, function() {
+			if (typeof(best.move) != 'undefined') {
+				board[best.move[0]][best.move[1]] = AI_MARK;
+			}
+			handleGameOver(state, overListener);
+		}, AI_TURN_TIMEOUT);
+	}
+	
+	function delayForbiddingMoves(state, action, delayTime) {
+		++state.userIsForbiddenToMakeAMove;
+		$timeout(function() {
+			action();
+			--state.userIsForbiddenToMakeAMove;
+		}, delayTime);
+	}
+	
+	return {
+		makeMoveAt: makeMoveAt,
+		initialState: initialState,
+		USER_WON: USER_WON,
+		AI_WON: AI_WON,
+		TIE: TIE
+	}
 }]);
