@@ -1,7 +1,17 @@
-angular.module('tic-tac-toe', ['logic', 'ui.bootstrap']).controller("GameController", [ '$scope', 'GameLogic', '$uibModal', function($scope, gameLogic, $uibModal) {
-	
-	$scope.state = gameLogic.initialState();
-	
+angular.module('tic-tac-toe', ['logic', 'ui.bootstrap'])
+.controller("GameController", [ '$scope', 'SinglePlayer', 'MultiPlayer', '$uibModal', function($scope, singlePlayer, multiPlayer, $uibModal) {
+
+	var gameLogic;
+
+	function setLogic(newLogic) {
+		gameLogic = newLogic;
+		$scope.state = newLogic.initialState();
+		$scope.player1Label = newLogic.player1Label;
+		$scope.player2Label = newLogic.player2Label;
+	}
+
+	setLogic(singlePlayer);
+
 	function showModal(messageToBeShown) {
 		$uibModal.open({ 
 			templateUrl: 'templates/modal.html',
@@ -14,24 +24,25 @@ angular.module('tic-tac-toe', ['logic', 'ui.bootstrap']).controller("GameControl
 		})
 	}
 	
-	function gameOverHandler(whoWon) {
-		if (whoWon == gameLogic.USER_WON) {
-			showModal('You\'re winner!©')
-		}
-		if (whoWon == gameLogic.AI_WON) {
-			showModal('You lose, better luck next time!')
-		}
-		if (whoWon == gameLogic.TIE) {
-			showModal('It\'s a tie!')
-		}
+	function gameOverHandler(gameOverMessage) {
+		showModal(gameOverMessage)
 	}
 	
 	this.newGame = function() {
 		$scope.state = gameLogic.initialState();
 	}
+
+	this.setMode = function(mode) {
+		if (mode == "singleplayer") {
+			setLogic(singlePlayer);
+		}
+		else {
+			setLogic(multiPlayer);
+		}
+	}
 	
-	this.clickedOn = function(i, j) {
-		gameLogic.makeMoveAt($scope.state, i, j, gameOverHandler);
+	this.clickedOn = function(row, column) {
+		gameLogic.makeMoveAt($scope.state, row, column, gameOverHandler);
 	}
 }]);
 

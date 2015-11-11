@@ -1,4 +1,4 @@
-angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout) {
+angular.module("logic", []).service("SinglePlayer", [ '$timeout', function($timeout) {
 	
 	const USER_MARK = 'X';
 	const AI_MARK = '0';
@@ -9,7 +9,7 @@ angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout
 		if (!string.match("^[X0_]{10}$")) {
 			throw "state must be represented as 10-character string of 'X', 'O' and '_'"
 		}
-		board = []
+		var board = []
 		for (var i = 0; i < 3; ++i) {
 			board.push([]);
 			for (var j = 0; j < 3; ++j) {
@@ -102,8 +102,8 @@ angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout
 	
 	function initialState() {
 		return {
-			userScore: 0,
-			cpuScore: 0,
+			player1Score: 0,
+			player2Score: 0,
 			// counter that allows recursive locking of user's move
 			userIsForbiddenToMakeAMove: 0,
 			board: parseState('X_________').board
@@ -117,19 +117,19 @@ angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout
 		}).length == 0;
 	}
 	
-	var USER_WON = "UserWon", AI_WON = "AiWon", TIE = "Tie";
-	
 	function handleGameOver(state, overListener) {
 		if (isWinningFor(state.board, USER_MARK)) {
-			++state.userScore;
-			overListener(USER_WON);			
+			state.player1Score += 2;
+			overListener('You\'re winner!©');
 		}
 		else if (isWinningFor(state.board, AI_MARK)) {
-			++state.cpuScore;
-			overListener(AI_WON);
+			state.player2Score +=2;
+			overListener('You lose, better luck next time!');
 		}
 		else if (noMoreMoves(state.board)) {
-			overListener(TIE);
+			state.player1Score += 1;
+			state.player2Score += 1;
+			overListener('It\'s a tie!');
 		}
 		else {
 			return;
@@ -168,8 +168,7 @@ angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout
 	return {
 		makeMoveAt: makeMoveAt,
 		initialState: initialState,
-		USER_WON: USER_WON,
-		AI_WON: AI_WON,
-		TIE: TIE
+		player1Label: 'You',
+		player2Label: 'CPU'
 	}
 }]);

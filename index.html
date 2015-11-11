@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="tic-tac-toe">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,45 +13,56 @@
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link href="styles/style.css" rel="stylesheet"></link>
-  </head>
-  <body ng-controller="GameController as game">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+</head>
+<body ng-controller="GameController as game">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/controllers.js"></script>
-	
-	<div class="container">
-		<nav class="navbar navbar-default">
-		  <div class="container-fluid">
-          <button type="button" class="btn btn-default navbar-btn" ng-click="game.newGame()">New Game</button>
-		  </div>
-		</nav>
-    
-    <div class="game-board-container">
-      <div class="game-board">
-        <div class="row" ng-repeat="i in [0, 1, 2]">
-          <div class="col-xs-4 cell" ng-repeat="j in [0, 1, 2]" 
-              ng-class="{'x-cell' : state.board[i][j] == 'X', 'o-cell' : state.board[i][j] == '0', 'empty-cell' : state.board[i][j] == '_' }"
-              ng-click="game.clickedOn(i, j)"></div>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+
+<script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
+<script src="js/services/single-player.js"></script>
+<script src="js/services/multi-player.js"></script>
+<script src="js/controllers.js"></script>
+
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li class="btn btn-default navbar-btn" ng-click="game.newGame()">New Game</li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Mode <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" ng-click="game.setMode('singleplayer')">Singleplayer</a></li>
+                        <li><a href="#" ng-click="game.setMode('multiplayer')">Multiplayer</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-      </div>
+    </nav>
+
+    <div class="game-board-container">
+        <div class="game-board">
+            <div class="row" ng-repeat="i in [0, 1, 2]">
+                <div class="col-xs-4 cell" ng-repeat="j in [0, 1, 2]"
+                     ng-class="{'x-cell' : state.board[i][j] == 'X', 'o-cell' : state.board[i][j] == '0', 'empty-cell' : state.board[i][j] == '_' }"
+                     ng-click="game.clickedOn(i, j)"></div>
+            </div>
+        </div>
     </div>
 
-	</div>
-  
-  <div class="score">
-    <p>You {{state.userScore}} : {{state.cpuScore}} CPU</p>
-  </div>
-  
-  </body>
+</div>
+
+<div class="score">
+    <p>{{player1Label}} {{state.player1Score}} : {{state.player2Score}} {{player2Label}}</p>
+</div>
+
+</body>
 </html>

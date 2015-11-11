@@ -34,7 +34,7 @@
 
 @media (max-width: 480px) {
   .o-cell { 
-    background: url("/images/O_small.png") no-repeat center;
+    background: url("../images/O_small.png") no-repeat center;
   }
   .x-cell { 
     background: url("/images/X_small.png") no-repeat center;
@@ -43,10 +43,10 @@
 
 @media (min-width: 481px) {
   .o-cell { 
-    background: url("/images/O.png") no-repeat center;
+    background: url("../images/O.png") no-repeat center;
   }
   .x-cell { 
-    background: url("/images/X.png") no-repeat center;
+    background: url("../images/X.png") no-repeat center;
   }
 }
 
