@@ -1,7 +1,7 @@
 angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout) {
   
   const USER_MARK = 'X';
-	const AI_MARK = '0';
+  const AI_MARK = '0';
   const AI_TURN_TIMEOUT = 500;
   const BOARD_RESET_TIMEOUT = 2000;
   
@@ -137,19 +137,26 @@ angular.module("logic", []).service("GameLogic", [ '$timeout', function($timeout
     }, BOARD_RESET_TIMEOUT);    
   }
   
+  var userCanMakeMove = true;
+  
   function makeMoveAt(state, i, j, overListener) {
+	if (!userCanMakeMove) {
+		return;
+	}	
     var board = state.board;
   	if (board[i][j] != '_') {
-			return;
-		}
-		board[i][j] = USER_MARK;
-		var best = findBestMove({ mine: AI_MARK, board: board });
-    
+		return;
+	}
+	board[i][j] = USER_MARK;
+	var best = findBestMove({ mine: AI_MARK, board: board });    
+	
+	userCanMakeMove = false;
     $timeout(function() {
       if (typeof(best.move) != 'undefined') {
         board[best.move[0]][best.move[1]] = AI_MARK;
       }
       handleGameOver(state, overListener);
+	  userCanMakeMove = true;
     }, AI_TURN_TIMEOUT);
   }
   
