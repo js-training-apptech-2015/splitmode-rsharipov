@@ -18,6 +18,10 @@
   }
 }
 
+.current-player {
+  font-weight: bold;
+}
+
 .cell {
   height: 0;
   padding-bottom: 33%;

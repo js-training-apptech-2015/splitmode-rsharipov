@@ -59,6 +59,7 @@ angular.module("logic").service("SinglePlayer", ['CommonLogic', '$timeout', func
 		return {
 			player1Score: 0,
 			player2Score: 0,
+			currentPlayer: 1,
 			// counter that allows recursive locking of user's move
 			userIsForbiddenToMakeAMove: 0,
 			board: common.parseState('X_________').board
@@ -96,10 +97,12 @@ angular.module("logic").service("SinglePlayer", ['CommonLogic', '$timeout', func
 			return;
 		}
 		board[i][j] = USER_MARK;
+		state.currentPlayer = common.invertPlayer(state.currentPlayer);
 		var best = findBestMove({mine: AI_MARK, board: board});
 		delayForbiddingMoves(state, function () {
 			if (typeof(best.move) != 'undefined') {
 				board[best.move[0]][best.move[1]] = AI_MARK;
+				state.currentPlayer = common.invertPlayer(state.currentPlayer);
 			}
 			handleGameOver(state, overListener);
 		}, AI_TURN_TIMEOUT);

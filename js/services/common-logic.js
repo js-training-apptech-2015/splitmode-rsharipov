@@ -51,8 +51,9 @@ angular.module("logic", []).service("CommonLogic", function () {
 				}
 			}
 			return true;
+		},
+		invertPlayer: function(old) {
+			return 3 - old;
 		}
-
-
 	}
 });

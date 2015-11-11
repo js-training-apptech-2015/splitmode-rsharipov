@@ -62,7 +62,8 @@
 </div>
 
 <div class="score">
-    <p>{{player1Label}} {{state.player1Score}} : {{state.player2Score}} {{player2Label}}</p>
+    <p><span ng-class="{'current-player' : state.currentPlayer == 1}">{{player1Label}}</span> {{state.player1Score}} :
+        {{state.player2Score}} <span ng-class="{'current-player' : state.currentPlayer == 2}">{{player2Label}}</span></p>
 </div>
 
 </body>
