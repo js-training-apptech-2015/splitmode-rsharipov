@@ -20,6 +20,7 @@ module.exports = function(config) {
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js',
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-mocks.js',
       '../js/*.js',
+	  '../js/services/*.js',
       '*.js'
     ],
 
