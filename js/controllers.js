@@ -9,9 +9,17 @@ angular.module('tic-tac-toe', ['logic', 'ui.bootstrap'])
 		$scope.player1Label = newLogic.player1Label;
 		$scope.player2Label = newLogic.player2Label;
 	}
-
-	setLogic(singlePlayer);
-
+	
+	function setMode(mode) {
+		if (mode == "singleplayer") {
+			setLogic(singlePlayer);
+		}
+		else {
+			setLogic(multiPlayer);
+		}
+		$scope.mode = mode;
+	}
+	
 	function showModal(messageToBeShown) {
 		$uibModal.open({ 
 			templateUrl: 'templates/modal.html',
@@ -39,11 +47,18 @@ angular.module('tic-tac-toe', ['logic', 'ui.bootstrap'])
 		else {
 			setLogic(multiPlayer);
 		}
+		$scope.mode = mode;
+	}
+	
+	this.setDifficulty = function(difficulty) {
+		$scope.state.difficulty = difficulty;
 	}
 	
 	this.clickedOn = function(row, column) {
 		gameLogic.makeMoveAt($scope.state, row, column, gameOverHandler);
 	}
+	
+	setMode("singleplayer")
 }]);
 
 angular.module('tic-tac-toe').controller('ModalController', ['$scope', 'message', function($scope, message) {

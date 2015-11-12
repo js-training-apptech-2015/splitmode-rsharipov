@@ -24,6 +24,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
 	<script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
 	<script src="js/services/common-logic.js"></script>
@@ -45,6 +46,27 @@
                     <ul class="dropdown-menu">
                         <li><a href="#" ng-click="game.setMode('singleplayer')">Singleplayer</a></li>
                         <li><a href="#" ng-click="game.setMode('multiplayer')">Multiplayer</a></li>
+                    </ul>
+                </li>
+				<li class="dropdown" ng-hide="mode != 'singleplayer'">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Difficulty <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+						<li><a href="#" ng-click="game.setDifficulty('easy')">
+							<span ng-class="{ 'icon-check-empty' : state.difficulty != 'easy', 'icon-check' : state.difficulty == 'easy' }"></span>
+								I'm too young to die
+							</a>
+						</li>
+                        <li><a href="#" ng-click="game.setDifficulty('medium')">
+							<span ng-class="{ 'icon-check-empty' : state.difficulty != 'medium', 'icon-check' : state.difficulty == 'medium' }"></span>
+								Hurt me plenty
+							</a>
+						</li>
+						<li><a href="#" ng-click="game.setDifficulty('hard')">
+							<span ng-class="{ 'icon-check-empty' : state.difficulty != 'hard', 'icon-check' : state.difficulty == 'hard' }"></span>
+								Nightmare!
+							</a>
+						</li>
                     </ul>
                 </li>
             </ul>
