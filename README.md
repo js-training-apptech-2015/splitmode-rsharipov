@@ -1,4 +1,5 @@
-# Splitmode implementation that uses AngularJS
+#Splitmode 
+implementation that uses AngularJS
 
 You can take a look at:
 
