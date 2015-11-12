@@ -6,7 +6,7 @@ angular.module("logic", []).service("CommonLogic", function () {
 		}
 		return result;
 	}
-
+	
 	function getWinningLine(mine) {
 		return mine + mine + mine;
 	}
@@ -54,6 +54,15 @@ angular.module("logic", []).service("CommonLogic", function () {
 		},
 		invertPlayer: function(old) {
 			return 3 - old;
+		},
+		asString: function(board, mine) {
+			var result = mine;
+			for (var i = 0; i < 3; ++i) {
+				for (var j = 0; j < board[i].length; ++j) {
+					result += board[i][j];
+				}
+			}
+			return result;
 		}
 	}
 });

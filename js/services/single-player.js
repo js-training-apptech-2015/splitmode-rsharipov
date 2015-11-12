@@ -5,6 +5,8 @@ angular.module("logic").service("SinglePlayer", ['CommonLogic', '$timeout', func
 	const AI_TURN_TIMEOUT = 500;
 	const BOARD_RESET_TIMEOUT = 2000;
 
+	var statesCache = {}
+
 	function clone(state) {
 		var newBoard = [];
 		for (var i = 0; i < 3; ++i) {
@@ -31,16 +33,20 @@ angular.module("logic").service("SinglePlayer", ['CommonLogic', '$timeout', func
 		return nextStates;
 	}
 
-	function findBestMove(state) {
+	function findBestMove(state) {	   
+		var cacheKey = common.asString(state.board, state.mine);
+		if (cacheKey in statesCache) {
+			return statesCache[cacheKey];
+		}	
 		if (common.isWinningFor(state.board, state.mine)) {
-			return {result: 1, distance: 0};
+			return statesCache[cacheKey] = {result: 1, distance: 0};
 		}
 		if (common.isWinningFor(state.board, common.invert(state.mine))) {
-			return {result: -1, distance: 0};
+			return statesCache[cacheKey] = {result: -1, distance: 0};
 		}
 		var nextMoves = calculateNextMoves(state);
 		if (nextMoves.length == 0) {
-			return {result: 0, distance: 0};
+			return statesCache[cacheKey] = {result: 0, distance: 0};
 		}
 		var bestMove = {result: 2};
 		for (var i = 0; i < nextMoves.length; ++i) {
@@ -52,7 +58,7 @@ angular.module("logic").service("SinglePlayer", ['CommonLogic', '$timeout', func
 			}
 		}
 		bestMove.result = -bestMove.result;
-		return bestMove;
+		return statesCache[cacheKey] = bestMove;
 	}
 
 	function initialState() {
