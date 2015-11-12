@@ -7,6 +7,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Tic-Tac-Toe</title>
 
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+	
     <!-- Bootstrap -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"></link>
 
@@ -17,20 +19,20 @@
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link href="styles/style.css" rel="stylesheet"></link>
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
+	<script src="js/services/common-logic.js"></script>
+	<script src="js/services/single-player.js"></script>
+	<script src="js/services/multi-player.js"></script>
+	<script src="js/controllers.js"></script>
+
 </head>
-<body ng-controller="GameController as game">
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
-
-<script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
-<script src="js/services/common-logic.js"></script>
-<script src="js/services/single-player.js"></script>
-<script src="js/services/multi-player.js"></script>
-<script src="js/controllers.js"></script>
+<body ng-controller="GameController as game" class="ng-cloak">
 
 <div class="container">
     <nav class="navbar navbar-default">

@@ -6,7 +6,13 @@ angular.module("logic").service("SinglePlayer", ['CommonLogic', '$timeout', func
 	const BOARD_RESET_TIMEOUT = 2000;
 
 	var statesCache = {}
+	
+	$timeout(forceCacheBuild, 50);
 
+	function forceCacheBuild() {
+		findBestMove(initialState());	
+	}
+	
 	function clone(state) {
 		var newBoard = [];
 		for (var i = 0; i < 3; ++i) {
