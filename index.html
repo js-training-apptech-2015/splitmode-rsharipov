@@ -44,8 +44,16 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Mode <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" ng-click="game.setMode('singleplayer')">Singleplayer</a></li>
-                        <li><a href="#" ng-click="game.setMode('multiplayer')">Multiplayer</a></li>
+                        <li><a href="#" ng-click="game.setMode('singleplayer')">
+							<span ng-class="{ 'icon-check-empty' : mode != 'singleplayer', 'icon-check' : mode == 'singleplayer' }"></span>
+							Singleplayer
+							</a>
+						</li>
+                        <li><a href="#" ng-click="game.setMode('multiplayer')">
+							<span ng-class="{ 'icon-check-empty' : mode != 'multiplayer', 'icon-check' : mode == 'multiplayer' }"></span>
+							Multiplayer
+							</a>
+						</li>
                     </ul>
                 </li>
 				<li class="dropdown" ng-hide="mode != 'singleplayer'">
